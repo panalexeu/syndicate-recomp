@@ -1,0 +1,30 @@
+# Syndicate runtime configuration. CMake copies this file next to the executable on every
+# build (the runtime reads <exe dir>/syndicate.toml). Edit this copy, not the one in out/.
+#
+# NOTE: path settings (game_data_root, ...) are read before this file is loaded, so pass
+# --game_data_root on the command line (tools/run.sh does).
+
+# Window: windowed 1280x720. Set fullscreen = true for borderless fullscreen.
+fullscreen = false
+window_width = 1280
+window_height = 720
+
+# GPU emulation plugin (librexgpu-xenos.so next to the executable). Without it every Vd* graphics
+# call is ignored and the game hangs waiting for the GPU before showing anything.
+gpu_plugin = "xenos"
+
+# EDRAM emulation: "fsi" = fragment shader interlock (accurate, slower), "fbo" = host render
+# targets (fast). The title screen was checked with "fbo".
+render_target_path_vulkan = "fsi"
+
+# Vulkan device index, listed in the log under "Available Vulkan physical devices".
+vulkan_device = 0
+
+# Present with vsync instead of redrawing as fast as possible.
+vulkan_allow_present_mode_immediate = false
+vulkan_allow_present_mode_mailbox = false
+
+# Xenia Canary's defaults. ReXGlue defaults both to true, which makes the CPU wait for the GPU
+# after GPU particle effects (memexport) and re-check GPU-written memory every frame.
+readback_memexport = false
+clear_memory_page_state = false
